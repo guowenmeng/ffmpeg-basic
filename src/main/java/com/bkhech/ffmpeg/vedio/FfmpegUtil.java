@@ -114,8 +114,16 @@ public class FfmpegUtil {
         command.add(ffmpegPath + "\\ffmpeg");
         command.add("-i");
         command.add(oldfilepath);
+        //解决 Too many packets buffered for output stream 0:1
+        command.add("-max_muxing_queue_size");
+        command.add("1024");
         command.add("-c:v");
         command.add("libx264");
+        //height not divisible by 2 (240x135)
+        //指定宽度，高度 等比缩放，-2 表示缩放为偶数
+//        command.add("-vf");
+//        command.add("scale=340:-2");
+
         command.add("-c:a");
         command.add("copy");
         command.add(outputPath);
